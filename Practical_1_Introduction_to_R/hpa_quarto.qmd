@@ -1,0 +1,24 @@
+---
+title: "hpa_quarto"
+author: "Liam Sahai"
+---
+
+This is calculating the number of elevated genes in the region of the forebrain. All data is pulled from [here](https://www.proteinatlas.org/humanproteome/brain)
+
+Human:
+```{r}
+sum(180,83,57,110)
+```
+
+Pig:
+```{r}
+sum(109, 157, 31, 45)
+```
+
+
+Mouse:
+```{r}
+sum(55,185, 60, 98)
+```
+
+

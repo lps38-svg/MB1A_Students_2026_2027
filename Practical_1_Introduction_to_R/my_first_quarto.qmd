@@ -1,0 +1,15 @@
+---
+title: "practical1_testing"
+author: "Liam Sahai"
+---
+**we can practice formating with bold** *or italics*
+or a link [google](https://www.google.com)
+
+i have measured the diameters of 4 bacterial colonies, which measure as follows 2.2 1.6 3.3 4.0 mm. this calculates the total diameter
+
+```{r}
+total_colony_diameter <-sum(2.2,1.6,3.3,4)
+print(total_colony_diameter)
+```
+
+the total diameter of my colonies is 11.1mm
