@@ -1,0 +1,87 @@
+---
+title: "Practical 1 excercises"
+author: "Liam Sahai"
+---
+```{r}
+library(tidyverse)
+library(gt)
+```
+
+Exercise 1 rounding
+```{r}
+round(3.14159)
+round(4.89, digits = 1)
+```
+Exercise 2 arguements
+```{r}
+print(seq(0,50,5))
+print(seq(to = 50, by = 5, from = 1))
+```
+Variables are either character, numeric or logical
+```{r}
+bool <- TRUE
+print(class(bool))
+x <- 10
+print(class(x))
+```
+
+tables as individual variables
+```{r}
+cell_id_1 <- "CX1"
+cell_id_2 <- "CX2"
+
+treated_1 <- TRUE
+treated_2 <- FALSE
+
+n_before_1 <- 5415
+n_before_2 <- 8123
+
+n_after_1 <- 1432
+n_after_2 <- 7543
+
+
+```
+
+creating vectors for each column in the previous table. then making it into a nice table using data frame
+```{r}
+cellIDs <- c(cell_id_1, cell_id_2)
+treated <- c(treated_1, treated_2)
+n_before <- c(n_before_1, n_before_2)
+n_after <- c(n_after_1, n_after_2)
+
+#print(paste(cellID[1], treated[1] ))
+
+my_data_frame <- tibble(
+  col1 = c(cell_id_1, cell_id_2),
+  col2 = c(treated_1, treated_2),
+  col3 = n_before,
+  col4 = n_after
+  
+)
+
+gt(my_data_frame)
+my_data_frame[1, "col2"]
+```
+isolating part of a vector
+```{r}
+pets <- c("dog", "cat", "horse", "chicken")
+third_pet <- pets[3]
+print(third_pet)
+```
+
+
+
+
+using the fortune library
+
+```{r}
+library(fortunes)
+fortune()
+```
+
+reading csv files
+```{r}
+weather <- read_csv("data/weather_data.csv")
+gt(weather)
+```
+

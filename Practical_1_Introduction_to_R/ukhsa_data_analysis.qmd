@@ -1,0 +1,21 @@
+---
+title: "data analysis practice"
+---
+```{r}
+library(gt)
+library(tidyverse)
+library(ggplot2)
+weather <- read_csv("data/weather_data.csv")
+rhinovirus <- read_csv("data/ukhsa-chart-download-rhinovirus.csv")
+gt(head(rhinovirus))
+
+ggplot(weather, aes(
+  x = observation_time,
+  y= temperature_c
+  
+)) +
+  geom_line(colour = "red")
+
+
+```
+
