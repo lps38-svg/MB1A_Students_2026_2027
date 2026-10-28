@@ -27,5 +27,13 @@ print(y<15)
 print(y>20)
 print(y<=12)
 ```
+joining data frames
+```{r}
+df_dept <- read_csv("data/depts.csv")
+df_score <- read_csv("data/scores.csv")
+
+combined_data <- full_join(df_dept, df_score)
+gt(combined_data)
+```
 
 

@@ -37,11 +37,81 @@ bird_migration_sites <- migratory_connectivity_dataset |>
           Westmost_Longitude = awestlon,
           Westmost_Latitude = awestlat)
 
-# gt(bird_migration_sites)
+
+
+
+# length(which(bird_migration_exc$Site != bird_migration_grouped$Site))
 ```
- removing spain
+ removing spain and adjusting the columns
 ```{r}
 bird_breeding_exc <- bird_breeding_selected |> filter(Site != "Spain")
 bird_migration_exc <- bird_migration_sites |> filter(Site != "Spain")
+
+
+bird_migration_grouped <- bird_migration_exc |> group_by(Site)
+
+
+glimpse(bird_migration_grouped)
+glimpse(bird_migration_exc)
+gt(bird_migration_exc)
+dim(bird_migration_exc)
+str(bird_migration_exc)
+table(bird_migration_exc$Site)
+
+lat_df <- bird_migration_grouped |>
+  summarise(
+    Highest_Lat_Stopover = max(Stopover_Latitude, na.rm = TRUE),
+    Lowest_Lat_Stopover = min(Stopover_Latitude, na.rm = TRUE),
+    Mean_Lat_Stopover = mean(Stopover_Latitude, na.rm = TRUE),
+    Highest_Lat_Winter = max(Winter_Latitude, na.rm = TRUE),
+    Lowest_Lat_Winter = min(Winter_Latitude, na.rm = TRUE),
+    Mean_Lat_Winter = mean(Winter_Latitude, na.rm = TRUE)
+  )
+
+gt(lat_df)
 ```
+ making a summary table
  
+```{r}
+bird_migration_summary <- bird_migration_grouped |>
+  summarise(
+    Stopover_Latitude = median(Stopover_Latitude, na.rm = TRUE),
+    Stopover_Longitude = median(Stopover_Longitude, na.rm = TRUE),
+    Iberian_Latitude = median(Iberian_Latitude, na.rm = TRUE),
+    Iberian_Longitude = median(Iberian_Longitude, na.rm = TRUE),
+    Westmost_Latitude = median(Westmost_Latitude, na.rm = TRUE),
+    Westmost_Longitude = median(Westmost_Longitude, na.rm = TRUE),
+    Winter_Latitude = median(Winter_Latitude, na.rm = TRUE),
+    Winter_Longitude = median(Winter_Longitude, na.rm = TRUE),
+  )
+
+gt(bird_migration_summary)
+```
+combining the datasets
+```{r}
+combined_bird_data <- full_join(bird_migration_summary, bird_breeding_exc)
+
+combined_bird_piv <- combined_bird_data |>
+  pivot_longer(
+    cols = ends_with(c("_Longitude", "_Latitude")),
+    names_sep = "_",
+    names_to = c("Location_Type", ".value")
+  )
+
+gt(combined_bird_piv)
+
+spring_locations <- c("Breeding", "Stopover", "Winter")
+autumn_locations <- c("Breeding", "Iberian", "Westmost", "Winter")
+
+
+bird_data_spring <- combined_bird_piv |> filter(Location_Type %in% spring_locations)
+bird_data_autumn <- combined_bird_piv |> filter(Location_Type %in% autumn_locations)
+```
+
+
+saving data
+```{r}
+write_csv(bird_data_spring, "output/birds_spring.csv")
+write_csv(bird_data_autumn, "output/birds_autumn.csv")
+```
+
