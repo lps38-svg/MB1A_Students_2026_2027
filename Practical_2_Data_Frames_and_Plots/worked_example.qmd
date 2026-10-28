@@ -115,3 +115,49 @@ write_csv(bird_data_spring, "output/birds_spring.csv")
 write_csv(bird_data_autumn, "output/birds_autumn.csv")
 ```
 
+
+making graphs
+```{r}
+
+min_long <- bird_data_spring |>
+  pull(Longitude) |>
+  min()
+
+max_long <- bird_data_spring |>
+  pull(Longitude) |>
+  max()
+
+min_lat <- bird_data_spring |>
+  pull(Latitude) |>
+  min()
+
+max_lat <- bird_data_spring |>
+  pull(Latitude) |>
+  max()
+
+
+ggplot(bird_data_spring,
+       aes(x=Longitude, y=Latitude, colour = Site, shape = Location_Type)) +
+      geom_point(size = 2.8) +
+       annotation_borders(linewidth = 0.2) +
+     coord_quickmap(xlim = c(min_long - 2, max_long + 2),
+                    ylim = c(min_lat - 2, max_lat +2)) +
+  ggtitle("Spring Migration Routes for Pied Flycatcher") 
+
+
+ggplot(bird_data_autumn,
+      aes(x=Longitude, y=Latitude, colour = Site, shape = Location_Type))+
+      geom_point(size=3) + 
+      annotation_borders(linewidth = 0.2)
+      # need to add the limits for autumn
+  
+  
+```
+
+
+
+
+
+
+
+
