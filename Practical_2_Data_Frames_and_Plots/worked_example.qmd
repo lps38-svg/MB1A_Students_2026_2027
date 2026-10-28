@@ -1,0 +1,47 @@
+---
+title: "worked_example"
+---
+part one of just loading and viewing the data before any formating
+```{r}
+library(gt)
+library(tidyverse)
+library(maps)
+
+breeding_site_locations <- read.csv("data/breeding_site_locations.csv")
+migratory_connectivity_dataset <- read.csv("data/migratory_connectivity_dataset.csv")
+
+gt(breeding_site_locations)
+colnames(breeding_site_locations)
+glimpse(migratory_connectivity_dataset)
+gt(head(migratory_connectivity_dataset))
+dim(migratory_connectivity_dataset)
+```
+
+now creating smaller databases without the junk
+```{r}
+bird_breeding_selected <- breeding_site_locations |> 
+  select(Site, Longitude, Latitude) |> 
+  distinct() |> 
+  rename(Breeding_Longitude = Longitude, Breeding_Latitude = Latitude)
+# gt(bird_breeding_selected)
+
+bird_migration_sites <- migratory_connectivity_dataset |>
+  select(Site, winterLongitude, winterLatitude, pslon, pslat, iblon, iblat, awestlon, awestlat) |>
+  distinct() |>
+  rename( Winter_Longitude = winterLongitude, 
+          Winter_Latitude = winterLatitude, 
+          Stopover_Longitude = pslon, 
+          Stopover_Latitude = pslat,
+          Iberian_Longitude = iblon,
+          Iberian_Latitude = iblat,
+          Westmost_Longitude = awestlon,
+          Westmost_Latitude = awestlat)
+
+# gt(bird_migration_sites)
+```
+ removing spain
+```{r}
+bird_breeding_exc <- bird_breeding_selected |> filter(Site != "Spain")
+bird_migration_exc <- bird_migration_sites |> filter(Site != "Spain")
+```
+ 

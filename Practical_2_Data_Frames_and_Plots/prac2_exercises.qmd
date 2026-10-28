@@ -1,0 +1,31 @@
+---
+title: "prac2_exercises"
+---
+
+reading the paper
+x- longitude, y- latitude
+colours represent the different countries that the populations breed in 
+shapes represent different types of locations
+
+moscow longitude - 36.7
+100 rows 34 collumns. tag is character variable
+
+piping
+```{r}
+library(gt)
+library(tidyverse)
+library(maps)
+
+input_vec <- c(5, -10, 4, -3)
+output <- input_vec |> mean() |> abs() |> round()
+# print(output)
+
+
+y <- 12
+print(y == 7)
+print(y<15)
+print(y>20)
+print(y<=12)
+```
+
+
